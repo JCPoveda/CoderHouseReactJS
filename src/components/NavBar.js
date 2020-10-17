@@ -3,7 +3,7 @@ import React from 'react';
 function NavBar() {
     return <>    
         <div className="topnav">
-            <a class="active" href="#home">Musicians Store</a>
+            <a class="active" href="#home"><strong>Musicians Store</strong></a>
             <a href="#Ofertas">Ofertas</a>
             <a href="#Guitarras">Guitarras</a>
             <a href="#Bajos">Bajos</a>
