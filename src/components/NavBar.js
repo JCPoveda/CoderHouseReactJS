@@ -1,15 +1,19 @@
 import React from 'react';
 
+function redirect(link) {
+    window.location.replace(link);
+}
+
 function NavBar() {
     return <>    
         <div className="topnav">
-            <a class="active" href="#home"><strong>Musicians Store</strong></a>
-            <a href="#Ofertas">Ofertas</a>
-            <a href="#Guitarras">Guitarras</a>
-            <a href="#Bajos">Bajos</a>
-            <a href="#Baterias">Baterias</a>
-            <a href="#Pianos">Pianos</a>
-            <a href="#Contacto">Contacto</a>
+            <p class="active" onClick={ () => redirect("#home") }><strong>Musicians Store</strong></p>
+            <p onClick={ () => redirect("#Ofertas") }>Ofertas</p>
+            <p onClick={ () => redirect("#Guitarras") }>Guitarras</p>
+            <p onClick={ () => redirect("#Bajos") }>Bajos</p>
+            <p onClick={ () => redirect("#Baterias") }>Baterias</p>
+            <p onClick={ () => redirect("#Pianos") }>Pianos</p>
+            <p onClick={ () => redirect("#Contacto") }>Contacto</p>
         </div>
      </>;
 }
