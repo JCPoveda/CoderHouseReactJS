@@ -24,19 +24,16 @@ function ItemCount({stock, initAmount, onAdd})  {
     const [itemAmount, setItemAmount] = useState();
 
     useEffect(() => {
-        console.log("Counter mounted.");
         setItemAmount(1);
       }, []);
 
     function addItem() {
-        console.log("Added Item");
         if ((itemAmount) < stock){
             setItemAmount(itemAmount + 1);
         }
     }
     
     function removeItem() {
-        console.log("Removed Item");
         if ((itemAmount) > initAmount){
             setItemAmount(itemAmount - 1);
         }

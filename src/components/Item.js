@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ItemDetailsContainer from './ItemDetailsContainer';
 
 const divStyle={
     color: "white",
@@ -34,26 +35,31 @@ const h3Style={
 function Item({data}) {
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [stock, setStock] = useState(0);
     const [price, setPrice] = useState(0);
     const [image, setImage] = useState(0);
+    const [seeDetail, setSeeDetail] = useState(false);
 
     useEffect(() => {
         setId(data.id);
         setName(data.name);
-        setDescription(data.description);
-        setStock(data.stock);
         setPrice(data.price);
         setImage(data.image);
     }, []);
+
+    useEffect(() => {
+        setId(data.id);
+        setName(data.name);
+        setPrice(data.price);
+        setImage(data.image);
+    }, [data]);
 
     return <>    
         <div style={divStyle}>
             <h3 style={h3Style}>Prod: {name}</h3>
             <img src={image} />
             <p>Price: {price}</p>
-            <button style={buttonStyle}>Details</button>
+            <button style={buttonStyle} onClick={() => setSeeDetail(true)}>See Details</button>
+            {seeDetail && <ItemDetailsContainer pId={id} onClose={(aux) => setSeeDetail(aux)} />}
         </div>
      </>;
 }
