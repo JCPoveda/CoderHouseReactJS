@@ -1,5 +1,6 @@
 import React from 'react';
 import CartWidget from './CartWidget';
+import { Link } from 'react-router-dom';
 
 function redirect(link) {
     window.location.replace(link);
@@ -8,13 +9,11 @@ function redirect(link) {
 function NavBar() {
     return <>    
         <div className="topnav">
-            <p className="active" onClick={ () => redirect("#home") }><strong>Musicians Store</strong></p>
-            <p onClick={ () => redirect("#Ofertas") }>Ofertas</p>
-            <p onClick={ () => redirect("#Guitarras") }>Guitarras</p>
-            <p onClick={ () => redirect("#Bajos") }>Bajos</p>
-            <p onClick={ () => redirect("#Baterias") }>Baterias</p>
-            <p onClick={ () => redirect("#Pianos") }>Pianos</p>
-            <p onClick={ () => redirect("#Contacto") }>Contacto</p>
+            <p><Link className="active" to="/" ><strong>Musicians Store</strong></Link></p>
+            <p><Link to='/category/Ofertas'>Ofertas</Link></p>
+            <p><Link to='/category/Guitaras'>Guitarras</Link></p>
+            <p><Link to='/category/Bajos'>Bajos</Link></p>
+            <p><Link to='/category/Pianos'>Pianos</Link></p>
             <CartWidget />
         </div>
      </>;

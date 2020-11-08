@@ -7,8 +7,6 @@ function ItemListContainer() {
 
     return <>    
         <div>
-            <p>Items in Cart: {cartAmount}</p>
-            <ItemCount stock={3} initAmount={1} onAdd={(qty) => setCartAmount(cartAmount + qty)}/>
             <ItemList />
         </div>
      </>;

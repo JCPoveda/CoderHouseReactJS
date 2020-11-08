@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import ItemDetails from './ItemDetails';
 
 const divStyle={
     color: "white",
     marginTop: 10,
-    marginRight: 10,
-    marginLeft: 10,
-    marginBottom: 10,
-    backgroundColor: "black",
-    fontSize: 24,
-};
-
-const h3Style={
-    color: "white",
-    marginTop: 10,
-    paddingTop: 10,
     marginRight: 10,
     marginLeft: 10,
     marginBottom: 10,
@@ -35,30 +25,37 @@ function getItems(id) {
     });
 }
 
-function ItemDetailsContainer({pId, onClose}) {
-    const [id, setId] = useState(0);
-    const [description, setDescription] = useState("");
-    const [stock, setStock] = useState(0);
+function ItemDetailsContainer() {
+    // const [id, setId] = useState(0);
+    const [itemData, setItemData] = useState();
+    const { itemId } = useParams(); 
 
     useEffect(() => {
-        setId(pId);
-        getItems(pId).then(
+        // setId(itemId);
+        getItems(itemId).then(
             res => {
-                setDescription(res.description);
-                setStock(res.stock);
-                console.log(res);
-            },
-            err => {
+                setItemData(res);
+              },
+              err => {
                 console.log(err);
-            }
-        );
+              }
+            );
     }, []);
+
+    useEffect(() => {
+        getItems(itemId).then(
+            res => {
+                setItemData(res);
+              },
+              err => {
+                console.log(err);
+              }
+            );
+    }, [itemId]);
 
     return <>    
         <div style={divStyle}>
-            {console.log(description)}
-            {console.log(stock)}
-            <ItemDetails pDescription={description} pStock={stock} onClose={(aux) => onClose(aux)} />
+            <ItemDetails data={itemData} />
         </div>
      </>;
 }

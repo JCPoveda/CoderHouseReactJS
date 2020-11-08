@@ -22,25 +22,39 @@ const h3Style={
     fontSize: 24,
 };
 
-function ItemDetails({pDescription, pStock, onClose}) {
+function ItemDetails({data}) {
     const [description, setDescription] = useState("");
     const [stock, setStock] = useState(0);
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState(0);
+    const [image, setImage] = useState(0);
 
     useEffect(() => {
-        setDescription(pDescription);
-        setStock(pStock);
-        console.log(stock);
+        if (data != undefined) {
+        setDescription(data.description);
+        setStock(data.tock);
+        setName(data.name);
+        setPrice(data.price);
+        setImage(data.image);
+        }
     }, []);
 
     useEffect(() => {
-        setDescription(pDescription);
-        setStock(pStock);
-    }, [pDescription, pStock]);
+        if (data != undefined) {
+        setDescription(data.description);
+        setStock(data.tock);
+        setName(data.name);
+        setPrice(data.price);
+        setImage(data.image);
+        }
+    }, [data]);
 
     return <>    
+        <h3 style={h3Style}>Prod: {name}</h3>
+        <img src={image} />
+        <p>Price: {price}</p>
         <h3 style={h3Style}>{description}</h3>
         <ItemCount stock={stock} initAmount={1} onAdd={(qty) => console.log(qty)}/>
-        <button style={buttonStyle} onClick={() => onClose(false)}>Close Details</button>
      </>;
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ItemDetailsContainer from './ItemDetailsContainer';
+import { Link } from 'react-router-dom';
 
 const divStyle={
     color: "white",
@@ -37,7 +37,6 @@ function Item({data}) {
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
     const [image, setImage] = useState(0);
-    const [seeDetail, setSeeDetail] = useState(false);
 
     useEffect(() => {
         setId(data.id);
@@ -58,8 +57,7 @@ function Item({data}) {
             <h3 style={h3Style}>Prod: {name}</h3>
             <img src={image} />
             <p>Price: {price}</p>
-            <button style={buttonStyle} onClick={() => setSeeDetail(true)}>See Details</button>
-            {seeDetail && <ItemDetailsContainer pId={id} onClose={(aux) => setSeeDetail(aux)} />}
+            <button style={buttonStyle}><Link to={`/item/${id}`} >See Details</Link></button>
         </div>
      </>;
 }
