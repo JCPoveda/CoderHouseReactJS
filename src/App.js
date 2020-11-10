@@ -11,7 +11,7 @@ import Cart from './components/Cart';
 
 function App() {
   return (
-    <CartProvider>
+    <CartProvider defaultCart={[]}>
     <BrowserRouter>
       <NavBar />
       <Switch>

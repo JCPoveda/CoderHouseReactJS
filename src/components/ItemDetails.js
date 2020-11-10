@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ItemCount from './ItemCount';
 import { Link } from 'react-router-dom';
+import { useCartContext } from '../context/cartContext';
 
 const h3Style={
     color: "white",
@@ -31,8 +32,11 @@ function ItemDetails({data}) {
     const [image, setImage] = useState(0);
     const [purchaseQty, setPurchaseQty] = useState(0);
 
+    const { addItem } = useCartContext();
+
     function onAdd(qty) {
         setPurchaseQty(qty);
+        addItem({item: data.name, qty: qty});
     }
 
     useEffect(() => {
@@ -61,13 +65,13 @@ function ItemDetails({data}) {
         }
     }, [data]);
 
-    return <>    
+    return <>   
         <h3 style={h3Style}>Prod: {name}</h3>
         <img src={image} />
         <p>Price: {price}</p>
         <h3 style={h3Style}>{description}</h3>
         {(purchaseQty == 0) && <ItemCount stock={stock} initAmount={1} onAdd={(qty) => onAdd(qty)}/>}
-{(purchaseQty != 0) && <button style={buttonStyle}><Link to='/Cart'>Finalize Purchase ({purchaseQty} Items)</Link></button>}
+        {(purchaseQty != 0) && <button style={buttonStyle} onClick={() => console.log({item: data.name, qty: purchaseQty})}><Link to='/Cart'>Finalize Purchase</Link></button>}
      </>;
 }
 
