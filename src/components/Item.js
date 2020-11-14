@@ -53,12 +53,15 @@ function Item({data}) {
     }, [data]);
 
     return <>    
-        <div style={divStyle}>
+        {(name != "") && <div style={divStyle}>
             <h3 style={h3Style}>Prod: {name}</h3>
             <img src={image} />
             <p>Price: {price}</p>
             <button style={buttonStyle}><Link to={`/item/${id}`} >See Details</Link></button>
-        </div>
+        </div>}
+        {(name == "") && <div style={divStyle}>
+            <h3 style={h3Style}>Loading...</h3>
+            </div>}
      </>;
 }
 

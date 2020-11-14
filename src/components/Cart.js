@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCartContext } from '../context/cartContext';
+import { Link } from 'react-router-dom';
 
 const buttonStyle={
     color: "white",
@@ -13,13 +14,19 @@ const buttonStyle={
 
 function Cart() {
     const { cart, clearCart, removeItem } = useCartContext();
+    const [totalValue, setTotalValue] = useState(0);
 
-    return <>    
-    <div>
+    return <> 
+    {(cart.length != 0) && <div>
         <p>Shopping Cart Items:</p>
-        {cart.map((obj) => <p>Item: {obj.item}  -   Quantity: {obj.quantity} <button style={buttonStyle} onClick={() => removeItem(obj.item)}>Remove Item</button></p>)}
+        {cart.map((obj) => <p>Item: {obj.item}  -   Quantity: {obj.quantity} -   Total Price: {obj.unitPrice * obj.quantity} <button style={buttonStyle} onClick={() => removeItem(obj.item)}>Remove Item</button></p>)}
+        <p>Total Price: {cart.reduce((a, b) => a + ((b.unitPrice * b.quantity) || 0), 0)}</p>
         <button style={buttonStyle} onClick={() => clearCart()}>Clear Cart</button>
-    </div>
+    </div>}
+    {(cart.length == 0) && <div>
+        <p>Your Shopping Cart is Empty!</p>
+        <button style={buttonStyle}><Link to='/'>Go to Shop</Link></button>
+    </div>}
  </>;
 }
 

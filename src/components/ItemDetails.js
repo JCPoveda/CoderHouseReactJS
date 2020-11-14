@@ -36,7 +36,7 @@ function ItemDetails({data}) {
 
     function onAdd(qty) {
         setPurchaseQty(qty);
-        addItem({item: data.name, qty: qty});
+        addItem({item: data.name, qty: qty, unitPrice: data.price});
     }
 
     useEffect(() => {
@@ -65,14 +65,19 @@ function ItemDetails({data}) {
         }
     }, [data]);
 
-    return <>   
-        <h3 style={h3Style}>Prod: {name}</h3>
-        <img src={image} />
-        <p>Price: {price}</p>
-        <h3 style={h3Style}>{description}</h3>
-        {(purchaseQty == 0) && <ItemCount stock={stock} initAmount={1} onAdd={(qty) => onAdd(qty)}/>}
-        {(purchaseQty != 0) && <button style={buttonStyle} onClick={() => console.log({item: data.name, qty: purchaseQty})}><Link to='/Cart'>Finalize Purchase</Link></button>}
-     </>;
+    return <>    
+        {(name != "") && <div>
+            <h3 style={h3Style}>Prod: {name}</h3>
+            <img src={image} />
+            <p>Price: {price}</p>
+            <h3 style={h3Style}>{description}</h3>
+            {(purchaseQty == 0) && <ItemCount stock={stock} initAmount={1} onAdd={(qty) => onAdd(qty)}/>}
+            {(purchaseQty != 0) && <button style={buttonStyle} onClick={() => console.log({item: data.name, qty: purchaseQty})}><Link to='/Cart'>Finalize Purchase</Link></button>}
+        </div>}
+        {(name == "") && <div>
+            <h3 style={h3Style}>Loading...</h3>
+        </div>}
+    </>;
 }
 
 export default ItemDetails;
