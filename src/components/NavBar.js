@@ -10,8 +10,7 @@ function NavBar() {
     return <>    
         <div className="topnav">
             <p><Link className="active" to="/" ><strong>Musicians Store</strong></Link></p>
-            <p><Link to='/category/Ofertas'>Ofertas</Link></p>
-            <p><Link to='/category/Guitaras'>Guitarras</Link></p>
+            <p><Link to='/category/Guitarras'>Guitarras</Link></p>
             <p><Link to='/category/Bajos'>Bajos</Link></p>
             <p><Link to='/category/Pianos'>Pianos</Link></p>
             <CartWidget />
