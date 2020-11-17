@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ItemDetails from './ItemDetails';
+import { getFirestore } from '../firebase';
 
 const divStyle={
     color: "white",
@@ -31,26 +32,33 @@ function ItemDetailsContainer() {
     const { itemId } = useParams(); 
 
     useEffect(() => {
-        // setId(itemId);
-        getItems(itemId).then(
-            res => {
-                setItemData(res);
-              },
-              err => {
-                console.log(err);
+            const db = getFirestore();
+            const itemCollection = db.collection('items');
+            const catCollection = itemCollection.doc(itemId);
+          
+            catCollection.get().then((querySnapshot) => {
+              if(querySnapshot.size === 0) {
+                  console.log('No Data')
               }
-            );
+              else {
+                setItemData(((doc = querySnapshot) => ({ id: doc.id, name: doc.data().title, description: doc.data().description, stock: doc.data().stock, price:  doc.data().price, image: ('/img/'+doc.data().imageId), category: doc.data().categoryId})))
+              }
+            })
     }, []);
 
     useEffect(() => {
-        getItems(itemId).then(
-            res => {
-                setItemData(res);
-              },
-              err => {
-                console.log(err);
+            const db = getFirestore();
+            const itemCollection = db.collection('items');
+            const catCollection = itemCollection.where('id', '==', itemId);
+          
+            catCollection.get().then((querySnapshot) => {
+              if(querySnapshot.size === 0) {
+                  console.log('No Data')
               }
-            );
+              else {
+                setItemData(querySnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().title, description: doc.data().description, stock: doc.data().stock, price:  doc.data().price, image: ('/img/'+doc.data().imageId), category: doc.data().categoryId})).first())
+              }
+            })
     }, [itemId]);
 
     return <>    

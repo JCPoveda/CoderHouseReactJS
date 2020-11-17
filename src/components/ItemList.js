@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Item from './Item';
+import { getFirestore } from '../firebase';
 
 
 function getItems() {
@@ -15,18 +16,23 @@ function getItems() {
     });
 }
 
+
 function ItemList() {
     const [list, setList] = useState([]);
     
-    useEffect(() => {
-        getItems().then(
-          res => {
-            setList(res);
-          },
-          err => {
-            console.log(err);
+    useEffect(() => {        
+        const db = getFirestore();
+        const itemCollection = db.collection('items');
+        const catCollection = itemCollection.where('categoryId', '==', 'Guitarras');
+      
+        itemCollection.get().then((querySnapshot) => {
+          if(querySnapshot.size === 0) {
+              console.log('No Data')
           }
-        );
+          else {
+            setList(querySnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().title, description: doc.data().description, stock: doc.data().stock, price:  doc.data().price, image: ('/img/'+doc.data().imageId), category: doc.data().categoryId})))
+          }
+        })
     }, []);
     
     return <>    
