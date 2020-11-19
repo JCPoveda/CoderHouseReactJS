@@ -36,7 +36,7 @@ function ItemDetails({data}) {
 
     function onAdd(qty) {
         setPurchaseQty(qty);
-        addItem({item: data.name, qty: qty, unitPrice: data.price});
+        addItem({itemId: data.id, item: data.name, qty: qty, unitPrice: data.price});
     }
 
     useEffect(() => {
