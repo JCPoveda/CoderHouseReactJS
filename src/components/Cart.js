@@ -17,20 +17,32 @@ const buttonStyle={
 const tableStyle={
     color: "white",
     marginTop: 10,
-    marginRight: 10,
-    marginLeft: 10,
     marginBottom: 10,
     backgroundColor: "grey",
     borderSpacing: 10,
-    width: "99%",
+    width: "80%",
     fontSize: 20,
+    marginLeft: "auto",
+    marginRight: "auto",
+};
+
+const tableStyle2={
+    color: "white",
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: "black",
+    borderSpacing: 10,
+    width: "30%",
+    fontSize: 20,
+    marginLeft: "auto",
+    marginRight: "auto",
 };
 
 function Cart() {
     const { cart, clearCart, removeItem } = useCartContext();
-    const [totalValue, setTotalValue] = useState(0);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [verEmail, setVerEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [message, setMessage] = useState("Your Shopping Cart is Empty!")
 
@@ -39,7 +51,8 @@ function Cart() {
             buyer: {name: name, telephone: phone, email: email}, 
             items: cart.map((obj) => ({id: obj.itemId, title: obj.item, price: obj.unitPrice, quantity: obj.quantity})), 
             total: cart.reduce((a, b) => a + ((b.unitPrice * b.quantity) || 0), 0),
-            date: firebase.firestore.FieldValue.serverTimestamp()
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            state: "Generated"
         };
         console.log(order)
 
@@ -60,7 +73,7 @@ function Cart() {
         const orders = db.collection("orders");
 
         orders.add(order).then(id => {
-            setMessage('Congratulations! Your order was created succesfully!');
+            setMessage(`Congratulations! Your Order ID: ${id.id} was generated!` );
             clearCart();
         });
     }
@@ -73,10 +86,26 @@ function Cart() {
         </table>
         <p>Total Price: {cart.reduce((a, b) => a + ((b.unitPrice * b.quantity) || 0), 0)}</p>
         <button style={buttonStyle} onClick={() => clearCart()}>Clear Cart</button>
-        <p>Name: <input onChange={event => setName(event.target.value)} /></p>
-        <p>Email: <input onChange={event => setEmail(event.target.value)} /></p>
-        <p>Phone: <input onChange={event => setPhone(event.target.value)} /></p>
-        <button style={buttonStyle} onClick={() => createOrder(name, email, phone)}>Finalize Purchase</button>
+        <table style={tableStyle2}>
+        <tr>
+            <td>Name:</td>
+            <td><input onChange={event => setName(event.target.value)} /></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input onChange={event => setEmail(event.target.value)} /></td>
+        </tr>
+        <tr>
+            <td>Ver. Email:</td>
+            <td><input onChange={event => setVerEmail(event.target.value)} /></td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td><input onChange={event => setPhone(event.target.value)} /></td></tr>
+        </table>
+        <button style={buttonStyle}
+            disabled={(!name || !email || !phone || email != verEmail)}
+            onClick={() => createOrder(name, email, phone)}>Finalize Purchase</button>
     </div>}
     {(cart.length == 0) && <div>
         <p>{message}</p>
