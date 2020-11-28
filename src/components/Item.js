@@ -54,8 +54,8 @@ function Item({data}) {
 
     return <>    
         {(name != "") && <div style={divStyle}>
-            <h3 style={h3Style}>Prod: {name}</h3>
-            <img src={image} />
+            <h3 style={h3Style}>{name}</h3>
+            <img src={image} width="250" heigth="250"/>
             <p>Price: {price}</p>
             <button style={buttonStyle}><Link to={`/item/${id}`} >See Details</Link></button>
         </div>}

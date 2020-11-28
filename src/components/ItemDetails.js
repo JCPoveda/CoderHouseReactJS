@@ -3,6 +3,17 @@ import ItemCount from './ItemCount';
 import { Link } from 'react-router-dom';
 import { useCartContext } from '../context/cartContext';
 
+const h2Style={
+    color: "white",
+    marginTop: 10,
+    paddingTop: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+    backgroundColor: "black",
+    fontSize: 26,
+};
+
 const h3Style={
     color: "white",
     marginTop: 10,
@@ -11,7 +22,7 @@ const h3Style={
     marginLeft: 10,
     marginBottom: 10,
     backgroundColor: "black",
-    fontSize: 24,
+    fontSize: 21,
 };
 
 const buttonStyle={
@@ -67,10 +78,10 @@ function ItemDetails({data}) {
 
     return <>    
         {(name != "") && <div>
-            <h3 style={h3Style}>Prod: {name}</h3>
-            <img src={image} />
+            <h3 style={h2Style}>{name}</h3>
+            <img src={image} width="350" heigth="350"/>
             <p>Price: {price}</p>
-            <h3 style={h3Style}>{description}</h3>
+            <h3 style={h3Style}><i>{description}</i></h3>
             {(purchaseQty == 0) && <ItemCount stock={stock} initAmount={1} onAdd={(qty) => onAdd(qty)}/>}
             {(purchaseQty != 0) && <button style={buttonStyle} onClick={() => console.log({item: data.name, qty: purchaseQty})}><Link to='/Cart'>Finalize Purchase</Link></button>}
         </div>}
